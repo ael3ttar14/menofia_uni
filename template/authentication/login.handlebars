@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Menofia University Login</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+   <style>
+      body {
+         font-family: Arial, sans-serif;
+         background-color: #f2f2f2;
+         margin: 0;
+         padding: 0;
+      }
+
+      .custom-container {
+         max-width: 600px;
+         margin: 0 auto;
+         padding: 50px;
+         background-color: #fff;
+         border-radius: 5px;
+         box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+      }
+
+      .custom-container h1 {
+         color: #006699;
+         text-align: center;
+         margin-top: 0;
+      }
+
+      .jumbotron {
+         margin-top: 30px;
+         padding: 30px;
+         border-radius: 5px;
+         background-color: #f2f2f2;
+      }
+
+      .form-group label {
+         font-weight: bold;
+         color: #333;
+      }
+
+      .form-control {
+         border-color: #ccc;
+         border-radius: 5px;
+      }
+
+      .optionsLogin {
+         display: flex;
+         justify-content: space-between;
+      }
+
+      .form-check-label {
+         margin-left: 5px;
+      }
+
+      .btn-login {
+         display: block;
+         margin: 0 auto;
+         background-color: #006699;
+         color: #fff;
+         font-size: 16px;
+         border: none;
+         border-radius: 5px;
+         padding: 10px 20px;
+         margin-top: 30px;
+         cursor: pointer;
+         width: 100%;
+      }
+
+      .btn-login:hover {
+         background-color: #004466;
+      }
+
+   </style>
+</head>
+
+<body>
+   <form action="/login" method="post">
+      <div class="custom-container">
+         <h1 class="text-center m-4 text-success">Menofia University</h1>
+         <div class="jumbotron">
+            <h3 class="text-center text-primary">Login</h3>
+            <br>
+            <div class="form-group">
+               <label for="email">Email<span class="text-danger"> *</span></label>
+               <input type="email" class="form-control" name="email" placeholder="Enter your Email">
+            </div>
+            <div class="form-group">
+               <label for="password">Password<span class="text-danger"> *</span></label>
+               <input type="password" class="form-control" name="password" placeholder="Enter Your Password">
+            </div>
+            <br>
+            <h5 class="text-primary">Login As :</h5>
+            <br>
+            <div class="optionsLogin">
+               <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="usertype" id="Admin" value="Admin"
+                     checked="checked">
+                  <label class="form-check-label" for="Admin">System User</label>
+               </div>
+               <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="usertype" id="Doctor" value="Doctor">
+                  <label class="form-check-label" for="isStaff">Staff</label>
+               </div>
+               <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="usertype" id="Student" value="Student">
+                  <label class="form-check-label" for="Student">Student</label>
+               </div>
+            </div>
+            <br>
+            <div class="form-group">
+               <input type="submit" value="Login" class="btn btn-login">
+            </div>
+         </div>
+      </div>
+   </form>
+</body>
+
+</html>
