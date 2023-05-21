@@ -214,33 +214,32 @@
                 editBtn.innerText = "Cancel";
                 title_input.value = title.innerText
             } else {
-                editBtn.innerText = "Edit";
-                updateBtn.classList.add("d-none");
-                title.classList.remove("d-none");
-                title_input.classList.add("d-none")
+                afterUpdatOrCancel(code)
             }
         }
-        function updateSubject(code) {
-            const title_input = document.querySelector(`.subject-name input#input_title_${code.split("_")[1]}`);
-
-            var xhr = new XMLHttpRequest();
-            let params = {
-                name: title_input.value,
-                refrenceCode: code.split("_")[1]
-            }
-            xhr.open('POST', 'subjects/update', true);
-            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-            xhr.send(JSON.stringify(params));
-
-            const updateBtn = document.querySelector(`#update_${code.split("_")[1]}`);
-            const editBtn = document.querySelector(`button#${code.split("_")[1]}`);
-            const title = document.querySelector(`.subject-name h2#title_${code.split("_")[1]}`);
-
+        function afterUpdatOrCancel(code) {
+            const updateBtn = document.querySelector(`#update_${code}`);
+            const editBtn = document.querySelector(`button#${code}`);
+            const title = document.querySelector(`.subject-name h2#title_${code}`);
+            const title_input = document.querySelector(`.subject-name input#input_title_${code}`);
             editBtn.innerText = "Edit";
             updateBtn.classList.add("d-none");
             title.classList.remove("d-none");
             title_input.classList.add("d-none")
             title.innerText = title_input.value
+        }
+        function updateSubject(code) {
+            const splittedCode = code.split("_")[1]
+            const title_input = document.querySelector(`.subject-name input#input_title_${splittedCode}`);
+            var xhr = new XMLHttpRequest();
+            let params = {
+                name: title_input.value,
+                refrenceCode: splittedCode
+            }
+            xhr.open('POST', 'subjects/update', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.send(JSON.stringify(params));
+            afterUpdatOrCancel(splittedCode)
         }
     </script>
 </body>
