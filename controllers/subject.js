@@ -35,3 +35,12 @@ export const deleteSubject = async (req, res) => {
     await subject.findOneAndDelete({ "_id": subjectId });
     res.redirect('/subjects');
 };
+
+export const updateSubject = async (req, res) => {
+    const body =  JSON.parse(Object.keys(req.body)[0])
+    const { refrenceCode } = body
+    delete body.refrenceCode
+     await subject.findOneAndUpdate({code: refrenceCode }, body);
+
+    res.redirect('/subjects');
+};
