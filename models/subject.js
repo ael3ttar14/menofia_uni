@@ -14,7 +14,7 @@ const subject = new Schema({
 
 	},
 	department: {
-		type: Schema.Types.ObjectId,
+		type: Schema.Types.Mixed,
 		required: false,
 		ref: 'department'
 
