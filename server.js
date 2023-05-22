@@ -1,13 +1,10 @@
 import express from 'express';
 import { create } from 'express-handlebars';
-
 import dotenv from 'dotenv'
 dotenv.config();
-
 import cookieParser from 'cookie-parser';
 import mongoose from 'mongoose';
-
-mongoose.connect(process.env.mongoConnectionUrl);
+import multer from 'multer';
 
 import adminRouter from './routes/admin.js';
 import doctorRouter from './routes/doctor.js';
@@ -19,18 +16,21 @@ import { authentication } from './middleware/authentication.js';
 import { Admin } from './middleware/isAdmin.js';
 import { Doctor } from './middleware/isDoctor.js';
 
+mongoose.connect(process.env.mongoConnectionUrl);
+
 const app = express();
+const upload = multer({ dest: 'uploads/' });
+
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static('public'));
-
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-const hbs = create({ /* config */ });
-// Register `hbs.engine` with the Express app.
+const hbs = create({});
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.set('views', './template');
@@ -40,9 +40,9 @@ app.use('/', authenticationRouter);
 app.use('/admin', authentication,Admin, adminRouter);
 app.use('/doctor', authentication,Doctor, doctorRouter);
 app.use('/student', authentication, studentRouter);
-
-app.use('/subjects', authentication,  subjectsRouter);
-app.use('/departments', authentication, departmentsRouter);
+app.use('/subjects', authentication, subjectsRouter(upload));
+app.use('/departments', authentication,Admin, departmentsRouter);
+app.use('/uploads', express.static('uploads'));
 
 app.listen(process.env.port,() =>{
 	console.log('started application on http://localhost:'+process.env.port)
