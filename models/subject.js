@@ -30,6 +30,11 @@ const subject = new Schema({
 		ref: 'user'
 
 	},
+	file_path: {
+		type: String,
+		required: true,
+	  },
+	  
 }, { timestamps: true });
 
 export default mongoose.model('subject', subject);

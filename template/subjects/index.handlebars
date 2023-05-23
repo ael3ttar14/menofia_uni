@@ -165,7 +165,8 @@
             </div>
             <div class="links-container">
                 <button id={{code}} class="button-link" onclick="openInputs(id)">Edit</button>
-                <button id="update_{{code}}" class="button-link success d-none" onclick="updateSubject(id)">Update</button>
+                <button id="update_{{code}}" class="button-link success d-none"
+                    onclick="updateSubject(id)">Update</button>
                 <div class="delete-container">
                     <form class="delete-form" action="/subjects/delete/{{_id}}" method="POST">
                         <button class="delete-button" type="submit"
@@ -178,15 +179,27 @@
             <h5 id="code_{{code}}">Code: {{code}}</h5>
         </div>
         <div class="upload-container">
-            <form action="/upload" method="post" enctype="multipart/form-data">
-                <label id="file-label_{{code}}" for="file-input_{{code}}" class="upload-button-label">Choose a file:</label>
-                <input id="file-input_{{code}}" type="file" name="file" accept="application/pdf, application/vnd.ms-excel"
-                    class="upload-button-input" onchange="handleFileSelect(id)">
-                <button id="upload-button_{{code}}`" type="submit" class="upload-button _{{code}}" disabled>Upload</button>
+            {{#if file_path}}
+            <div>
+                <a href="{{file_path}}" download>Download File</a>
+            </div>
+            {{/if}}
+            <form action="/subjects/upload/{{_id}}" method="post" enctype="multipart/form-data"
+                onsubmit="handleFormSubmit('{{code}}')">
+                <label id="file-label_{{code}}" for="file-input_{{code}}" class="upload-button-label">Choose a
+                    file:</label>
+                <input id="file-input_{{code}}" type="file" name="file"
+                    accept="application/pdf, application/vnd.ms-excel" class="upload-button-input"
+                    onchange="handleFileSelect(id)">
+                <button id="upload-button_{{code}}`" type="submit" class="upload-button _{{code}}"
+                    disabled>Upload</button>
             </form>
+            <div class="upload-success d-none" id="upload-success_{{code}}">Upload completed successfully!</div>
         </div>
     </div>
     {{/each}}
+
+
 
     <script>
         function handleFileSelect(code) {
@@ -204,12 +217,20 @@
                 uploadBtn.disabled = true;
             }
         }
+        function handleFormSubmit(code) {
+            var uploadSuccess = document.getElementById(`upload-success_${code}`);
+            uploadSuccess.classList.remove('d-none');
+
+            setTimeout(function () {
+                uploadSuccess.classList.add('d-none');
+            }, 10000);
+        }
         function openInputs(code) {
             const updateBtn = document.querySelector(`#update_${code}`);
             const editBtn = document.querySelector(`button#${code}`);
             const title = document.querySelector(`.subject-name h2#title_${code}`);
             const title_input = document.querySelector(`.subject-name input#input_title_${code}`);
-            if(editBtn.innerText == 'Edit') {
+            if (editBtn.innerText == 'Edit') {
                 title.classList.add("d-none");
                 title_input.classList.remove("d-none")
                 updateBtn.classList.remove("d-none");
