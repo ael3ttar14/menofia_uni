@@ -1,4 +1,3 @@
-
 export const Doctor = (req, res, next) => {
   if (req.user.usertype === 'Doctor') {
     next();

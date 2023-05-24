@@ -65,7 +65,7 @@ export const login = async (req, res) => {
     if (loggeduser.usertype === 'Admin') {
       res.redirect('/admin');
     } else if (loggeduser.usertype === 'Student') {
-      res.redirect('/user');
+      res.redirect('/student');
     } else if (loggeduser.usertype === 'Doctor') {
       res.redirect('/doctor');
     } else {
@@ -83,7 +83,7 @@ export const admin = (req, res) => {
 };
 
 export const User = (req, res) => {
-  res.render('user');
+  res.render('student');
 };
 
 export const doctor = (req, res) => {
