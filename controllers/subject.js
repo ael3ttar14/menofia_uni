@@ -103,3 +103,15 @@ export const updateSubject = async (req, res) => {
     await subject.findOneAndUpdate({ code: refrenceCode }, body);
     res.redirect('/subjects');
 };
+export const getStudentsBySubject = async (req, res) => {
+  try {
+    const subjectCode = req.params.code;
+    const subject = await subject.findOne({ code: subjectCode });
+    const students = await students.find({ subjects: subject._id });
+
+    res.render('students', { subject, students });
+  } catch (err) {
+    console.error('Error fetching students by subject:', err);
+    res.status(500).send('An error occurred while fetching students by subject');
+  }
+};
