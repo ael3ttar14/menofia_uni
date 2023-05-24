@@ -2,6 +2,7 @@ import multer from 'multer';
 import subject from '../models/subject.js';
 import department from '../models/department.js';
 import user from '../models/user.js';
+import File from '../models/file.js';
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -33,26 +34,61 @@ export const create = async (req, res) => {
 
 export const store = async (req, res) => {
 
-    upload.single('file')(req, res, async (err) => {
-        if (err) {
-            res.send('Error uploading file.');
-        } else if (!req.file) {
-            res.send('No file selected for upload.');
-        } else {
-            const newSubject = new subject({
-                name: req.body.name,
-                code: req.body.code,
-                doctor: req.body.doctor,
-                department: req.body.department,
-                subject_depended: req.body.subject_depended,
-                file_path: req.file.path,
-            });
-
-            await newSubject.save();
-            res.redirect('/subjects');
-        }
+    const newSubject = new subject({
+        name: req.body.name,
+        code: req.body.code,
+        doctor: req.body.doctor,
+        department: req.body.department,
+        subject_depended: req.body.subject_depended,
     });
+
+    await newSubject.save();
+
+    res.redirect('/subjects');
 };
+
+export const uploadSingleFile = async (req, res) => {
+    const file = new File({
+      filename: req.file.filename,
+      originalname: req.file.originalname,
+      mimetype: req.file.mimetype,
+      path: req.file.path,
+      size: req.file.size,
+    });
+  
+    await file.save();
+    res.json({ message: 'Upload completed successfully' });
+  };
+  
+  export const uploadSingleFileAndUpdateSubject = async (req, res) => {
+    const subjectId = req.params.id;
+  
+    const file = new File({
+      filename: req.file.filename,
+      originalname: req.file.originalname,
+      mimetype: req.file.mimetype,
+      path: req.file.path,
+      size: req.file.size,
+    });
+  
+    await file.save();
+  
+    await subject.findByIdAndUpdate(subjectId, { file: file._id });
+  
+    res.redirect('/subjects');
+  };
+  
+export const downloadFile = async (req, res) => {
+    const subjectId = req.params.id;
+    
+    const subjectObj = await subject.findById(subjectId).populate('file').lean();
+    if (subjectObj && subjectObj.file) {
+      const file = subjectObj.file;
+      res.download(file.path, file.originalname);
+    } else {
+      res.status(404).send('File not found');
+    }
+  };  
 
 export const deleteSubject = async (req, res) => {
     const subjectId = req.params.id;

@@ -29,3 +29,16 @@ export const store = async (req, res) => {
     res.redirect('/departments');
 };
 
+export const deleteDepartment = async (req, res) => {
+    const departmentId = req.params.id;
+    await department.findOneAndDelete({ _id: departmentId });
+    res.redirect('/departments');
+};
+
+export const updateDepartment = async (req, res) => {
+    const body = JSON.parse(Object.keys(req.body)[0]);
+    const { refrenceCode } = body;
+    delete body.refrenceCode;
+    await department.findOneAndUpdate({ code: refrenceCode }, body);
+    res.redirect('/departments');
+};
