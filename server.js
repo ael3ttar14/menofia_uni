@@ -40,7 +40,7 @@ app.use('/', authenticationRouter);
 app.use('/admin', authentication,Admin, adminRouter);
 app.use('/doctor', authentication,Doctor, doctorRouter);
 app.use('/student', authentication, studentRouter);
-app.use('/subjects', authentication, subjectsRouter(upload));
+app.use('/subjects', authentication,Admin,  subjectsRouter(upload));
 app.use('/departments', authentication,Admin, departmentsRouter);
 app.use('/uploads', express.static('uploads'));
 

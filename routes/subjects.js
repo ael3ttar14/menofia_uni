@@ -19,13 +19,13 @@ const createSubjectRoutes = (upload) => {
   
   router.post('/update', updateSubject);
   
-  router.post('/upload', upload.single('file'), uploadSingleFile);
+  // router.post('/upload', upload.single('file'), uploadSingleFile);
   
-  router.post('/upload/:id', upload.single('file'), uploadSingleFileAndUpdateSubject);
+  // router.post('/upload/:id', upload.single('file'), uploadSingleFileAndUpdateSubject);
   
-  router.get('/download/:id', downloadFile);
+  // router.get('/download/:id', downloadFile);
 
-  router.get('/subjects/:code/students', getStudentsBySubject);
+  // router.get('/subjects/:code/students', getStudentsBySubject);
   
   return router;
 };
