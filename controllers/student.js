@@ -12,6 +12,16 @@ export const index = async (req, res) => {
   }
 };
 
+export const student = async (req, res) => {
+    if (req.user.usertype === 'Student') {
+       const subjects = await subject.find({}, { code: 1, name: 1, department: 1 }).lean();
+       res.render('student/subject', { subjects });
+    } else {
+       const errorMessage = 'You must be a student to access this resource.';
+       res.status(404).send(errorMessage);
+       return;
+    }
+ };
 
 
 export const registerSubjects = async (req, res) => {
@@ -26,7 +36,7 @@ export const registerSubjects = async (req, res) => {
 
 
 
-async function saveRegistration(req, res) {
+export const saveRegistration = async function saveRegistration(req, res) {
   try {
     const { name, subjects } = req.body;
 
@@ -57,5 +67,3 @@ async function saveRegistration(req, res) {
     res.status(500).send('An error occurred during registration.');
   }
 }
-
-export { saveRegistration };

@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Subjects</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        h2 {
+            color: #006699;
+            font-size: 24px;
+            margin-top: 0px;
+            display: inline-block;
+        }
+
+        h5 {
+            color: #333;
+            font-size: 18px;
+            display: inline-block;
+        }
+
+        .subject-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 20px;
+            margin-top: 30px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+        }
+
+        .subject-links {
+            margin: 0 0 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .code {
+            margin: 0 0 10px 0;
+        }
+
+        .button-link {
+            display: inline-block;
+            background-color: #006699;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            text-decoration: none;
+            margin-right: 5px;
+        }
+
+        .success {
+            background-color: green
+        }
+
+        .delete-container {
+            display: flex;
+            align-items: center;
+            margin-left: 5px;
+        }
+
+        .upload-container {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .upload-button {
+            background-color: #006699;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            margin-left: 10px;
+        }
+
+        .upload-button:hover {
+            background-color: #003d4d;
+        }
+
+        .upload-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .upload-button-label {
+            background-color: #006699;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            margin-right: 10px;
+        }
+
+        .upload-button-label:hover {
+            background-color: #003d4d;
+        }
+
+        .upload-button-input {
+            display: none;
+        }
+
+        .delete-button {
+            background-color: #f44336;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            margin-left: 5px;
+        }
+
+        .delete-button:hover {
+            background-color: #d32f2f;
+        }
+
+        .links-container {
+            display: flex;
+        }
+
+        .d-none {
+            display: none;
+        }
+
+        @media screen and (max-width: 450px) {
+            .subject-links {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Subjects</h1>
+    {{#each subjects }}
+    <div class="subject-container">
+        <div class="subject-links">
+            <div class="subject-name">
+                <h2 id="title_{{code}}">{{name}}</h2>
+                <input class="d-none" id="input_title_{{code}}" type="text" />
+            </div>
+            <div class="links-container">
+                 <form action="/upload" method="post" enctype="multipart/form-data">
+                <button id="upload-button_{{code}}`" type="submit" class="upload-button _{{code}}">Download</button>
+            </form>
+                <button id="update_{{code}}" class="button-link success d-none"
+                    onclick="updateSubject(id)">Update</button>
+            </div>
+        </div>
+        <div class="code">
+            <h5 id="code_{{code}}">Code: {{code}}</h5>
+        </div>
+    </div>
+    {{/each}}
+
+    <script>
+        function handleFileSelect(code) {
+            code = code.split("_")[1]
+            var label = document.getElementById(`file-label_${code}`);
+            var fileInput = document.getElementById(`file-input_${code}`);
+            var uploadBtn = document.querySelector(`._${code}`)
+
+            if (fileInput.value) {
+                var fileName = fileInput.files[0].name;
+                label.innerHTML = fileName;
+                uploadBtn.disabled = false;
+            } else {
+                label.innerHTML = "Choose a file:";
+                uploadBtn.disabled = true;
+            }
+        }
+        function openInputs(code) {
+            const updateBtn = document.querySelector(`#update_${code}`);
+            const editBtn = document.querySelector(`button#${code}`);
+            const title = document.querySelector(`.subject-name h2#title_${code}`);
+            const title_input = document.querySelector(`.subject-name input#input_title_${code}`);
+            if (editBtn.innerText == 'Edit') {
+                title.classList.add("d-none");
+                title_input.classList.remove("d-none")
+                updateBtn.classList.remove("d-none");
+                editBtn.innerText = "Cancel";
+                title_input.value = title.innerText
+            } else {
+                afterUpdatOrCancel(code)
+            }
+        }
+        function afterUpdatOrCancel(code) {
+            const updateBtn = document.querySelector(`#update_${code}`);
+            const editBtn = document.querySelector(`button#${code}`);
+            const title = document.querySelector(`.subject-name h2#title_${code}`);
+            const title_input = document.querySelector(`.subject-name input#input_title_${code}`);
+            editBtn.innerText = "Edit";
+            updateBtn.classList.add("d-none");
+            title.classList.remove("d-none");
+            title_input.classList.add("d-none")
+            title.innerText = title_input.value
+        }
+        function updateSubject(code) {
+            const splittedCode = code.split("_")[1]
+            const title_input = document.querySelector(`.subject-name input#input_title_${splittedCode}`);
+            var xhr = new XMLHttpRequest();
+            let params = {
+                name: title_input.value,
+                refrenceCode: splittedCode
+            }
+            xhr.open('POST', 'subjects/update', true);
+            xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+            xhr.send(JSON.stringify(params));
+            afterUpdatOrCancel(splittedCode)
+        }
+    </script>
+</body>
+
+
+</html>
