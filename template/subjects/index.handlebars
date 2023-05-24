@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html>
 
-
-
 <head>
     <title>Subjects</title>
     <meta charset="UTF-8">
@@ -160,7 +158,9 @@
     <div class="subject-container">
         <div class="subject-links">
             <div class="subject-name">
-                <h2 id="title_{{code}}">{{name}}</h2>
+                <h2 id="title_{{code}}">
+                    <a href="/subjects/{{code}}/students">{{name}}</a>
+                </h2>
                 <input class="d-none" id="input_title_{{code}}" type="text" />
             </div>
             <div class="links-container">
@@ -178,7 +178,7 @@
         <div class="code">
             <h5 id="code_{{code}}">Code: {{code}}</h5>
         </div>
-        <div class="upload-container">
+        {{!-- <div class="upload-container">
             {{#if file_path}}
             <div>
                 <a href="{{file_path}}" download>Download File</a>
@@ -195,11 +195,9 @@
                     disabled>Upload</button>
             </form>
             <div class="upload-success d-none" id="upload-success_{{code}}">Upload completed successfully!</div>
-        </div>
+        </div> --}}
     </div>
     {{/each}}
-
-
 
     <script>
         function handleFileSelect(code) {
@@ -266,6 +264,5 @@
         }
     </script>
 </body>
-
 
 </html>
