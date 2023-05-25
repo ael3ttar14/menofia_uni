@@ -140,21 +140,23 @@
     </header>
     <main>
         <h2>My Courses</h2>
-        <h2>Subjects</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Code</th>
+                    <th>Subject</th>
+                   <!-- <th>Code</th>
                     <th>Name</th>
                     <th>Prerequisite for the subject</th>
                     <th>Doctor</th>
-                    <th></th>
+                    <th></th>--.
                 </tr>
             </thead>
             <tbody>
                 {{#each subjects}}
                 <tr>
-                    <td>{{code}}</td>
+
+                    <td>{{this}}</td>
+                    <!-- <td>{{code}}</td>
                     <td>{{name}}</td>
                     <td>{{subject_depended}}</td>
                     <td>{{doctor}}</td>
@@ -162,13 +164,12 @@
                          <form action="/student/download/{{_id}}" method="get" enctype="multipart/form-data">
                             <button id="download-button_{{code}}`" type="submit" class="download-button _{{code}}">Download</button>
                         </form>
-                    </td>
+                    </td>-->
                 </tr>
                 {{/each}}
             </tbody>
         </table>
     </main>
-
 </body>
 
 </html>
