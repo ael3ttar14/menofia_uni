@@ -97,29 +97,21 @@
     </header>
     <main>
         <h2>My Courses</h2>
-        <h2>Subjects</h2>
         <table>
             <thead>
                 <tr>
-                    <th>Code</th>
-                    <th>Name</th>
-                    <th>Prerequisite for the subject</th>
-                    <th>Doctor</th>
+                    <th>Subject</th>
                 </tr>
             </thead>
             <tbody>
                 {{#each subjects}}
                 <tr>
-                    <td>{{code}}</td>
-                    <td>{{name}}</td>
-                    <td>{{subject_depended}}</td>
-                    <td>{{doctor}}</td>
+                    <td>{{this}}</td>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
     </main>
-
 </body>
 
 </html>
