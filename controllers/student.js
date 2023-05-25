@@ -1,5 +1,6 @@
 import user from '../models/user.js';
 import subject from '../models/subject.js';
+import File from '../models/file.js';
 import Registration from '../models/registration.js';
 
 export const index = async (req, res) => {
@@ -67,3 +68,15 @@ export const saveRegistration = async function saveRegistration(req, res) {
     res.status(500).send('An error occurred during registration.');
   }
 }
+
+export const download = async (req, res) => {
+  try {
+    const subjects = await subject.find({_id: req.params.id}).lean();
+    const selectedFile = await File.find({_id: subjects[0].file}).lean()
+    const file = `${selectedFile[0].path}`;
+    res.download(file)
+  } catch (error) {
+    console.error('Error retrieving subjects:', error);
+    res.status(500).json({ error: 'An error occurred while retrieving the subjects' });
+  }
+};

@@ -81,6 +81,49 @@
             background-color: #336699;
             color: #fff;
         }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .download-button {
+            background-color: #006699;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            margin-left: 10px;
+        }
+
+        .download-button:hover {
+            background-color: #003d4d;
+        }
+
+        .download-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .download-button-label {
+            background-color: #006699;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            margin-right: 10px;
+        }
+
+        .download-button-label:hover {
+            background-color: #003d4d;
+        }
+
+        .download-button-input {
+            display: none;
+        }
     </style>
 </head>
 
@@ -105,6 +148,7 @@
                     <th>Name</th>
                     <th>Prerequisite for the subject</th>
                     <th>Doctor</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -114,6 +158,11 @@
                     <td>{{name}}</td>
                     <td>{{subject_depended}}</td>
                     <td>{{doctor}}</td>
+                    <td class="text-center"> 
+                         <form action="/student/download/{{_id}}" method="get" enctype="multipart/form-data">
+                            <button id="download-button_{{code}}`" type="submit" class="download-button _{{code}}">Download</button>
+                        </form>
+                    </td>
                 </tr>
                 {{/each}}
             </tbody>
