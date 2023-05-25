@@ -42,6 +42,7 @@ export const uploadSingleFile = async (req, res) => {
    });
  
    await file.save();
+   await subject.findByIdAndUpdate(subjectId, { file: file._id });
    // await res.json({ message: 'Upload completed successfully' });
    res.redirect('/doctor/subject');
  };
@@ -61,5 +62,5 @@ export const uploadSingleFile = async (req, res) => {
  
    await subject.findByIdAndUpdate(subjectId, { file: file._id });
  
-   res.redirect('/subjects');
+   res.redirect('/doctor/subject');
  };

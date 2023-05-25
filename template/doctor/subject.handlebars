@@ -177,14 +177,14 @@
             <h5 id="code_{{code}}">Code: {{code}}</h5>
         </div>
         <div class="upload-container">
-            <form action="/doctor/upload" method="post" enctype="multipart/form-data">
+            <form action="/doctor/upload/{{_id}}" method="post" enctype="multipart/form-data">
                 <label id="file-label_{{code}}" for="file-input_{{code}}" class="upload-button-label">Choose a
                     file:</label>
                 <input id="file-input_{{code}}" type="file" name="file"
                     accept="application/pdf, application/vnd.ms-excel" class="upload-button-input"
                     onchange="handleFileSelect(id)">
                 <button id="upload-button_{{code}}`" type="submit" class="upload-button _{{code}}"
-                    disabled onCLick="uploaded">Upload</button>
+                    disabled>Upload</button>
             </form>
         </div>
     </div>
