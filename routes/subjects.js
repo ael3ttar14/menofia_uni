@@ -17,7 +17,7 @@ const createSubjectRoutes = (upload) => {
   router.post('/delete/:id', deleteSubject);
   
   router.post('/update', updateSubject);
-  
+    
   return router;
 };
 

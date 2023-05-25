@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Create A New Subject</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      border-radius: 5px;
+      padding: 50px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, .2);
+    }
+
+    label {
+      font-weight: bold;
+      color: #333;
+    }
+
+    .form-control {
+      border-color: #ccc;
+      border-radius: 5px;
+    }
+
+    .form-select {
+      border-color: #ccc;
+      border-radius: 5px;
+    }
+
+    .btn-save {
+      display: block;
+      margin: 0 auto;
+      background-color: #336699;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      margin-top: 30px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .btn-save:hover {
+      background-color: #336699;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Registration form</h1>
+  <br>
+  <form action="/student" method="post">
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" class="form-control" name="name" id="name">
+    </div>
+    <div class="form-group">
+      <label for="subject1">Subject 1</label>
+      <select name="subjects[]" id="subject1" class="form-select">
+        {{#each subjects}}
+        <option value="{{name}}">{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="subject2">Subject 2</label>
+      <select name="subjects[]" id="subject2" class="form-select">
+        {{#each subjects}}
+        <option value="{{name}}">{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="subject3">Subject 3</label>
+      <select name="subjects[]" id="subject3" class="form-select">
+        {{#each subjects}}
+        <option value="{{name}}">{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="subject4">Subject 4</label>
+      <select name="subjects[]" id="subject4" class="form-select">
+        {{#each subjects}}
+        <option value="{{name}}">{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="subject5">Subject 5</label>
+      <select name="subjects[]" id="subject5" class="form-select">
+        {{#each subjects}}
+        <option value="{{name}}">{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="subject6">Subject 6</label>
+      <select name="subjects[]" id="subject6" class="form-select">
+        {{#each subjects}}
+        <option value="{{name}}">{{name}}</option>
+        {{/each}}
+      </select>
+    </div>
+    <br>
+    <div class="form-group">
+      <button class="btn btn-success btn-save" type="submit">Save</button>
+    </div>
+  </form>
+</body>
+
+</html>
