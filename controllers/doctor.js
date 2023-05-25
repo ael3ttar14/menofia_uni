@@ -2,6 +2,7 @@ import department from '../models/department.js';
 import subject from '../models/subject.js';
 import user from '../models/user.js';
 import { doctor } from './user.js';
+import File from '../models/file.js';
 
 export const index = async (req, res) => {
    console.log(req.user);
@@ -30,3 +31,35 @@ export const student = async (req, res) => {
       return;
    }
 };
+
+export const uploadSingleFile = async (req, res) => {
+   const file = new File({
+     filename: req.file.filename,
+     originalname: req.file.originalname,
+     mimetype: req.file.mimetype,
+     path: req.file.path,
+     size: req.file.size,
+   });
+ 
+   await file.save();
+   // await res.json({ message: 'Upload completed successfully' });
+   res.redirect('/doctor/subject');
+ };
+ 
+ export const uploadSingleFileAndUpdateSubject = async (req, res) => {
+   const subjectId = req.params.id;
+ 
+   const file = new File({
+     filename: req.file.filename,
+     originalname: req.file.originalname,
+     mimetype: req.file.mimetype,
+     path: req.file.path,
+     size: req.file.size,
+   });
+ 
+   await file.save();
+ 
+   await subject.findByIdAndUpdate(subjectId, { file: file._id });
+ 
+   res.redirect('/subjects');
+ };
