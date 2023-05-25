@@ -2,7 +2,6 @@ import multer from 'multer';
 import subject from '../models/subject.js';
 import department from '../models/department.js';
 import user from '../models/user.js';
-import File from '../models/file.js';
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -47,36 +46,7 @@ export const store = async (req, res) => {
     res.redirect('/subjects');
 };
 
-export const uploadSingleFile = async (req, res) => {
-    const file = new File({
-      filename: req.file.filename,
-      originalname: req.file.originalname,
-      mimetype: req.file.mimetype,
-      path: req.file.path,
-      size: req.file.size,
-    });
-  
-    await file.save();
-    res.json({ message: 'Upload completed successfully' });
-  };
-  
-  export const uploadSingleFileAndUpdateSubject = async (req, res) => {
-    const subjectId = req.params.id;
-  
-    const file = new File({
-      filename: req.file.filename,
-      originalname: req.file.originalname,
-      mimetype: req.file.mimetype,
-      path: req.file.path,
-      size: req.file.size,
-    });
-  
-    await file.save();
-  
-    await subject.findByIdAndUpdate(subjectId, { file: file._id });
-  
-    res.redirect('/subjects');
-  };
+
   
 export const downloadFile = async (req, res) => {
     const subjectId = req.params.id;

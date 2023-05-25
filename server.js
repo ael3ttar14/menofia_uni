@@ -38,15 +38,13 @@ app.set('views', './template');
 app.use('/register', authentication,Admin, authenticationRouter);
 app.use('/', authenticationRouter);
 app.use('/admin', authentication,Admin, adminRouter);
-app.use('/doctor', authentication,Doctor, doctorRouter);
+app.use('/doctor', authentication,Doctor, doctorRouter(upload));
 app.use('/student', authentication, studentRouter);
-app.use('/subjects', authentication,Admin,  subjectsRouter(upload));
+app.use('/subjects', authentication,Admin, subjectsRouter());
 app.use('/departments', authentication,Admin, departmentsRouter);
 app.use('/uploads', express.static('uploads'));
 
 app.listen(process.env.port,() =>{
 	console.log('started application on http://localhost:'+process.env.port)
+  
 });
-
-
-
