@@ -3,30 +3,40 @@ import subject from '../models/subject.js';
 import File from '../models/file.js';
 import Registration from '../models/registration.js';
 
-async function index(req, res) {
+export const index = async (req, res) => {
+    try {
+      const subjects = await subject.find({}, { code: 1, name: 1, subject_depended: 1, doctor: 1 }).lean();
+      res.render('student/student', { subjects });
+    } catch (error) {
+      console.error('Error retrieving subjects:', error);
+      res.status(500).json({ error: 'An error occurred while retrieving the subjects' });
+    }
+};
+
+// async function index(req, res) {
   
-  const userId = req.user._id;
-  console.log(userId)
+//   const userId = req.user._id;
+//   console.log(userId)
 
 
-  const User = await user.findById(userId);
+//   const User = await user.findById(userId);
 
 
-  const registration = await Registration.findOne({ student: user });
-      console.log(userId)
+//   const registration = await Registration.findOne({ student: user });
+//       console.log(userId)
 
 
-  if (!registration) {
-    return res.status(404).send('No registration found');
-  }
+//   if (!registration) {
+//     return res.status(404).send('No registration found');
+//   }
 
-  const registeredSubjects = registration.subjects;
+//   const registeredSubjects = registration.subjects;
 
-  res.render('student/student', { subjects: registeredSubjects });
-} 
+//   res.render('student/student', { subjects: registeredSubjects });
+// } 
 
 
-export { index };
+//export { index };
 
 
 export const student = async (req, res) => {
@@ -87,7 +97,7 @@ export const saveRegistration = async function saveRegistration(req, res) {
 
 export const download = async (req, res) => {
   try {
-    const subjects = await subject.find({_id: req.params.id}).lean();
+    const subjects = await subject.find({_id: req.params.id}).lean(); //return array
     const selectedFile = await File.find({_id: subjects[0].file}).lean()
     const file = `${selectedFile[0].path}`;
     res.download(file)
